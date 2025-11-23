@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="LICENSE.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="EvernoteClone.Application/EvernoteClone.Application.csproj" />
+  <Project Path="EvernoteClone.Domain/EvernoteClone.Domain.csproj" />
+  <Project Path="EvernoteClone.Infrastructure/EvernoteClone.Infrastructure.csproj" />
+  <Project Path="EvernoteClone.WPF/EvernoteClone.WPF.csproj" />
+</Solution>
