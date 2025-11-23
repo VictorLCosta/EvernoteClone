@@ -1,0 +1,1 @@
+﻿global using EvernoteClone.Domain.Common;
