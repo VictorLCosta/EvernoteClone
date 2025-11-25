@@ -1,4 +1,5 @@
-﻿using EvernoteClone.Domain.Entities;
+﻿using EvernoteClone.Application.Common.Interfaces;
+using EvernoteClone.Domain.Entities;
 using EvernoteClone.WPF.Commands;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -24,9 +25,9 @@ public class NotesViewModel : ViewModelBase
     public ICommand NewNotebookCommand { get; set; }
     public ICommand NewNoteCommand { get; set; }
 
-    public NotesViewModel()
+    public NotesViewModel(IApplicationDbContext context)
     {
-        NewNotebookCommand = new NewNotebookCommand(this);
+        NewNotebookCommand = new NewNotebookCommand(this, context);
         NewNoteCommand = new NewNoteCommand(this);
     }
 }

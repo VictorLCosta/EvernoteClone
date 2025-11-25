@@ -1,4 +1,5 @@
 ﻿using EvernoteClone.Infrastructure;
+using EvernoteClone.WPF.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Windows;
@@ -23,7 +24,7 @@ public partial class App : System.Windows.Application
     {
         _host.Start();
 
-        Window window = _host.Services.GetRequiredService<MainWindow>();
+        Window window = _host.Services.GetRequiredService<NotesView>();
         window.Show();
 
         base.OnStartup(e);
