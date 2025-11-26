@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EvernoteClone.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251123220122_V1")]
+    [Migration("20251126132014_V1")]
     partial class V1
     {
         /// <inheritdoc />

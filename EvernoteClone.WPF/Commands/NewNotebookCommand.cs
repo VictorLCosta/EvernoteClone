@@ -10,7 +10,8 @@ public class NewNotebookCommand(NotesViewModel viewModel, IApplicationDbContext 
     {
         var notebook = new Notebook()
         {
-            Name = "New Notebook"
+            Name = "New Notebook",
+            UserId = 1
         };
 
         await context.Notebooks.AddAsync(notebook);

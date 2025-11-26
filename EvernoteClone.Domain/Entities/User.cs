@@ -8,5 +8,5 @@ public class User : BaseEntity
 
     public string Password { get; set; } = string.Empty;
 
-    public ICollection<Notebook> Notebooks { get; set; }
+    public ICollection<Notebook> Notebooks { get; set; } = [];
 }

@@ -19,7 +19,9 @@ public static class Extensions
                 opt.UseSqlite(connectionString).EnableSensitiveDataLogging();
             });
 
-            services.AddTransient<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
+            services
+                .AddTransient<ApplicationDbContextInitialiser>()
+                .AddTransient<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
         });
 
         return host;
