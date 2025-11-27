@@ -7,5 +7,5 @@ public class Notebook : BaseEntity
     public int UserId { get; set; }
     public User User { get; set; } = null!;
 
-    public ICollection<Note> Notes { get; set; }
+    public ICollection<Note> Notes { get; set; } = [];
 }

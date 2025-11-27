@@ -10,10 +10,37 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="New notebook" Command="{Binding NewNotebookCommand}" />
-                <MenuItem Header="New note" Command="{Binding NewNoteCommand}" />
+                <MenuItem Header="New note" 
+                          Command="{Binding NewNoteCommand}"
+                          CommandParameter="{Binding SelectedNotebook}" />
                 <Separator />
                 <MenuItem Header="Exit" Click="MenuItem_Click" />
             </MenuItem>
         </Menu>
+        <ListView DockPanel.Dock="Left"
+                  Width="140"
+                  ItemsSource="{Binding Notebooks}"
+                  SelectedItem="{Binding SelectedNotebook}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListView DockPanel.Dock="Left"
+                  Width="140"
+                  ItemsSource="{Binding Notes}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Content="Speech" 
+                        Click="SpeechButton_Click" />
+            </ToolBar>
+        </ToolBarTray>
     </DockPanel>
 </Window>

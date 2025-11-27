@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EvernoteClone.Application\EvernoteClone.Application.csproj" />
     <ProjectReference Include="..\EvernoteClone.Infrastructure\EvernoteClone.Infrastructure.csproj" />
   </ItemGroup>

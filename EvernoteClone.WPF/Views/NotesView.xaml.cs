@@ -15,4 +15,9 @@ public partial class NotesView : Window
     {
         System.Windows.Application.Current.Shutdown();
     }
+
+    private void SpeechButton_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
 }
