@@ -17,6 +17,11 @@
                 <MenuItem Header="Exit" Click="MenuItem_Click" />
             </MenuItem>
         </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock x:Name="StatusTextBlock" />
+            </StatusBarItem>
+        </StatusBar>
         <ListView DockPanel.Dock="Left"
                   Width="140"
                   ItemsSource="{Binding Notebooks}"

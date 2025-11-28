@@ -15,6 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Speech" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EvernoteClone.Application\EvernoteClone.Application.csproj" />
     <ProjectReference Include="..\EvernoteClone.Infrastructure\EvernoteClone.Infrastructure.csproj" />
   </ItemGroup>
