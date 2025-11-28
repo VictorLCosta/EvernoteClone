@@ -1,5 +1,4 @@
-﻿using EvernoteClone.Application.Common.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,15 +12,13 @@ public static class Extensions
         host.ConfigureServices((context, services) =>
         {
             var connectionString = context.Configuration.GetConnectionString("DefaultConnection");
+            Action<DbContextOptionsBuilder> configureDbContext = o => o.UseSqlite(connectionString).EnableSensitiveDataLogging();
 
-            services.AddDbContext<ApplicationDbContext>(opt =>
-            {
-                opt.UseSqlite(connectionString).EnableSensitiveDataLogging();
-            });
+            services.AddDbContext<ApplicationDbContext>(configureDbContext);
 
             services
                 .AddTransient<ApplicationDbContextInitialiser>()
-                .AddTransient<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
+                .AddSingleton<ApplicationDbContextFactory>(new ApplicationDbContextFactory(configureDbContext));
         });
 
         return host;

@@ -1,5 +1,5 @@
-﻿using EvernoteClone.Application.Common.Interfaces;
-using EvernoteClone.Domain.Entities;
+﻿using EvernoteClone.Domain.Entities;
+using EvernoteClone.Infrastructure.Persistence;
 using EvernoteClone.WPF.Commands;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
@@ -9,7 +9,7 @@ namespace EvernoteClone.WPF.ViewModels;
 
 public class NotesViewModel : ViewModelBase
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ApplicationDbContextFactory _factory;
 
     public ObservableCollection<Notebook> Notebooks { get; set; } = [];
     public ObservableCollection<Note> Notes { get; set; } = [];
@@ -31,19 +31,21 @@ public class NotesViewModel : ViewModelBase
     public ICommand NewNotebookCommand { get; set; }
     public ICommand NewNoteCommand { get; set; }
 
-    public NotesViewModel(IApplicationDbContext context)
+    public NotesViewModel(ApplicationDbContextFactory context)
     {
-        _context = context;
+        _factory = context;
 
-        NewNotebookCommand = new NewNotebookCommand(this, _context);
-        NewNoteCommand = new NewNoteCommand(this, _context);
+        NewNotebookCommand = new NewNotebookCommand(this, _factory);
+        NewNoteCommand = new NewNoteCommand(this, _factory);
 
         _ = GetNotebooks();
     }
 
     private async Task GetNotebooks()
     {
-        var notebooks = await _context.Notebooks.ToListAsync();
+        using var db = _factory.CreateDbContext();
+
+        var notebooks = await db.Notebooks.ToListAsync();
 
         foreach (var notebook in notebooks)
         {
@@ -55,7 +57,9 @@ public class NotesViewModel : ViewModelBase
     {
         Notes.Clear();
 
-        var notes = await _context.Notes
+        using var db = _factory.CreateDbContext();
+
+        var notes = await db.Notes
             .Where(n => n.NotebookId == SelectedNotebook!.Id)
             .ToListAsync();
 

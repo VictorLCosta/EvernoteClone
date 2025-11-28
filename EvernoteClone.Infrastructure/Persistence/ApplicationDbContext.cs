@@ -1,12 +1,11 @@
-﻿using EvernoteClone.Application.Common.Interfaces;
-using EvernoteClone.Domain.Entities;
+﻿using EvernoteClone.Domain.Entities;
 
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace EvernoteClone.Infrastructure.Persistence;
 
-public class ApplicationDbContext(DbContextOptions options) : DbContext(options), IApplicationDbContext
+public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
 {
     public DbSet<Note> Notes => Set<Note>();
 

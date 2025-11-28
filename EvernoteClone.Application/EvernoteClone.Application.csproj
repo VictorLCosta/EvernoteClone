@@ -18,4 +18,8 @@
     <ProjectReference Include="..\EvernoteClone.Domain\EvernoteClone.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\Interfaces\" />
+  </ItemGroup>
+
 </Project>
