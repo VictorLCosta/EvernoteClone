@@ -1,7 +1,7 @@
 ﻿using System.Speech.Recognition;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace EvernoteClone.WPF.Views;
 
@@ -76,6 +76,21 @@ public partial class NotesView : Window
 
     private void BoldButton_Click(object sender, RoutedEventArgs e)
     {
-        ContentRichTextBox.Selection.ApplyPropertyValue(Inline.FontWeightProperty, FontWeights.Bold);
+        bool isChecked = (sender as ToggleButton)?.IsChecked ?? false;
+
+        if (isChecked) 
+        {
+            ContentRichTextBox.Selection.ApplyPropertyValue(Inline.FontWeightProperty, FontWeights.Bold);
+        }
+        else
+        {
+            ContentRichTextBox.Selection.ApplyPropertyValue(Inline.FontWeightProperty, FontWeights.Normal);
+        }
+    }
+
+    private void ContentRichTextBox_SelectionChanged(object sender, RoutedEventArgs e)
+    {
+        var selectedWeight = ContentRichTextBox.Selection.GetPropertyValue(Inline.FontWeightProperty);
+        BoldButton.IsChecked = selectedWeight != DependencyProperty.UnsetValue && selectedWeight.Equals(FontWeights.Bold);
     }
 }

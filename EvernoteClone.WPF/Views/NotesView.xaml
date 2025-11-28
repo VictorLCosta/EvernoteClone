@@ -45,7 +45,7 @@
             <ToolBar>
                 <Button Content="Speech" 
                         Click="SpeechButton_Click" />
-                <Button x:Name="BoldButton"
+                <ToggleButton x:Name="BoldButton"
                         Content="B" 
                         FontWeight="Bold"
                         Click="BoldButton_Click" />
@@ -53,7 +53,8 @@
         </ToolBarTray>
         <Grid>
             <RichTextBox x:Name="ContentRichTextBox"
-                         TextChanged="ContentRichTextBox_TextChanged" />
+                         TextChanged="ContentRichTextBox_TextChanged"
+                         SelectionChanged="ContentRichTextBox_SelectionChanged" />
         </Grid>
     </DockPanel>
 </Window>
