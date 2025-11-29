@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace EvernoteClone.WPF.Views;
 
@@ -15,6 +16,12 @@ public partial class NotesView : Window
         InitializeSpeech();
 
         DataContext = dataContext;
+
+        CbFontFamily.ItemsSource = Fonts.SystemFontFamilies;
+        CbFontSize.ItemsSource = new List<double>() 
+        { 
+            8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72 
+        };
     }
 
     private void InitializeSpeech()
@@ -92,5 +99,18 @@ public partial class NotesView : Window
     {
         var selectedWeight = ContentRichTextBox.Selection.GetPropertyValue(Inline.FontWeightProperty);
         BoldButton.IsChecked = selectedWeight != DependencyProperty.UnsetValue && selectedWeight.Equals(FontWeights.Bold);
+
+        CbFontFamily.SelectedItem = ContentRichTextBox.Selection.GetPropertyValue(Inline.FontFamilyProperty);
+        CbFontSize.Text = ContentRichTextBox.Selection.GetPropertyValue(Inline.FontSizeProperty).ToString();
+    }
+
+    private void CbFontFamily_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        ContentRichTextBox.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, CbFontFamily.SelectedItem);
+    }
+
+    private void CbFontSize_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        ContentRichTextBox.Selection.ApplyPropertyValue(Inline.FontSizeProperty, CbFontSize.SelectedItem);
     }
 }

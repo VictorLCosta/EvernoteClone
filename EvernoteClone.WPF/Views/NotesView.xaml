@@ -49,6 +49,13 @@
                         Content="B" 
                         FontWeight="Bold"
                         Click="BoldButton_Click" />
+                <ComboBox x:Name="CbFontFamily"
+                          Width="100"
+                          SelectionChanged="CbFontFamily_SelectionChanged" />
+                <ComboBox x:Name="CbFontSize"
+                          IsEditable="True"
+                          Width="50"
+                          SelectionChanged="CbFontSize_SelectionChanged" />
             </ToolBar>
         </ToolBarTray>
         <Grid>
