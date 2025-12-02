@@ -1,4 +1,6 @@
-﻿using System.Speech.Recognition;
+﻿using EvernoteClone.WPF.ViewModels;
+using System.IO;
+using System.Speech.Recognition;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
@@ -8,6 +10,7 @@ namespace EvernoteClone.WPF.Views;
 
 public partial class NotesView : Window
 {
+    private readonly NotesViewModel? ViewModel;
     private SpeechRecognitionEngine recognizer = new();
 
     public NotesView(object dataContext)
@@ -15,7 +18,8 @@ public partial class NotesView : Window
         InitializeComponent();
         InitializeSpeech();
 
-        DataContext = dataContext;
+        ViewModel = dataContext as NotesViewModel;
+        DataContext = ViewModel;
 
         CbFontFamily.ItemsSource = Fonts.SystemFontFamilies;
         CbFontSize.ItemsSource = new List<double>() 
@@ -112,5 +116,20 @@ public partial class NotesView : Window
     private void CbFontSize_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
         ContentRichTextBox.Selection.ApplyPropertyValue(Inline.FontSizeProperty, CbFontSize.SelectedItem);
+    }
+
+    private void SaveButton_Click(object sender, RoutedEventArgs e)
+    {
+        string fileName = $"{ViewModel!.SelectedNote!.Id}.rtf";
+        string rtfFile = Path.Combine(Environment.CurrentDirectory, fileName);
+
+        using (FileStream fileStream = new(rtfFile, FileMode.Create))
+        {
+            TextRange range = new(ContentRichTextBox.Document.ContentStart, ContentRichTextBox.Document.ContentEnd);
+            range.Save(fileStream, DataFormats.Rtf);
+        }
+
+        string fileUrl = "";
+        ViewModel.SelectedNote.FileLocation = fileUrl;
     }
 }

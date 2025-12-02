@@ -4,8 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EvernoteClone.WPF.Views"
+        xmlns:uc="clr-namespace:EvernoteClone.WPF.UserControls"
         mc:Ignorable="d"
-        Title="NotesView" Height="450" Width="800">
+        Title="NotesView"
+        Icon="/Views/Notes.ico"
+        Height="450" 
+        Width="800">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
@@ -22,22 +26,42 @@
                 <TextBlock x:Name="StatusTextBlock" />
             </StatusBarItem>
         </StatusBar>
-        <ListView DockPanel.Dock="Left"
+        <ListView x:Name="NotebookList"
+                  DockPanel.Dock="Left"
                   Width="140"
+                  Background="DarkBlue"
                   ItemsSource="{Binding Notebooks}"
                   SelectedItem="{Binding SelectedNotebook}">
+            <ListView.Resources>
+                <ContextMenu x:Key="NotebookContextMenu">
+                    <MenuItem Header="Delete notebook"
+              Command="{Binding Source={x:Reference NotebookList}, 
+                                Path=DataContext.DeleteNotebookCommand}"
+              CommandParameter="{Binding PlacementTarget.DataContext, 
+                                         RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                </ContextMenu>
+            </ListView.Resources>
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="ContextMenu" Value="{StaticResource NotebookContextMenu}" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}" />
+                    <uc:DisplayNotebook Notebook="{Binding}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ListView DockPanel.Dock="Left"
+        <ListView x:Name="NotesList"
+                  DockPanel.Dock="Left"
                   Width="140"
-                  ItemsSource="{Binding Notes}">
+                  ItemsSource="{Binding Notes}"
+                  SelectedItem="{Binding SelectedNote}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Title}" />
+                    <uc:DisplayNote Note="{Binding}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -56,10 +80,14 @@
                           IsEditable="True"
                           Width="50"
                           SelectionChanged="CbFontSize_SelectionChanged" />
+                <Button x:Name="SaveButton"
+                        Content="Save"
+                        Click="SaveButton_Click" />
             </ToolBar>
         </ToolBarTray>
         <Grid>
             <RichTextBox x:Name="ContentRichTextBox"
+                         
                          TextChanged="ContentRichTextBox_TextChanged"
                          SelectionChanged="ContentRichTextBox_SelectionChanged" />
         </Grid>

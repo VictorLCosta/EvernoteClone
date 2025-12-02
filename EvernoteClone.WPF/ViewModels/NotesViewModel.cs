@@ -28,8 +28,21 @@ public class NotesViewModel : ViewModelBase
         }
     }
 
+    private Note? _selectedNote;
+
+    public Note? SelectedNote
+    {
+        get => _selectedNote;
+        set
+        {
+            _selectedNote = value;
+            OnPropertyChanged(nameof(SelectedNote));
+        }
+    }
+
     public ICommand NewNotebookCommand { get; set; }
     public ICommand NewNoteCommand { get; set; }
+    public ICommand DeleteNotebookCommand { get; set; }
 
     public NotesViewModel(ApplicationDbContextFactory context)
     {
@@ -37,6 +50,7 @@ public class NotesViewModel : ViewModelBase
 
         NewNotebookCommand = new NewNotebookCommand(this, _factory);
         NewNoteCommand = new NewNoteCommand(this, _factory);
+        DeleteNotebookCommand = new DeleteNotebookCommand(this, _factory);
 
         _ = GetNotebooks();
     }
